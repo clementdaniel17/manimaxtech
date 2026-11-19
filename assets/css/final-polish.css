@@ -1,0 +1,71 @@
+/* =========================================================
+   MANIMAX TECH — FINAL MOTION POLISH
+   Stable layout first; restrained editorial motion second.
+   ========================================================= */
+:root{--mt-ease:cubic-bezier(.2,.72,.2,1);--mt-soft:cubic-bezier(.22,.61,.36,1)}
+
+/* Prevent font/animation entrance from changing the layout. */
+.hero,.hero-grid,.hero-copy,.hero-visual,.page-hero{min-width:0}
+.hero-grid{align-items:center}
+.hero-copy h1{max-width:12.5ch;min-height:0!important;line-height:1.04;text-wrap:balance}
+.hero-visual{display:grid;place-items:center;isolation:isolate;overflow:visible}
+.hero-logo{display:block;max-width:100%;height:auto;object-fit:contain;transform:translate3d(var(--mt-pointer-x,0px),var(--mt-pointer-y,0px),0);backface-visibility:hidden}
+.site-header,.site-header.is-scrolled{background:rgba(5,22,42,.97)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;transition:box-shadow .25s ease!important}
+.site-header.is-scrolled{box-shadow:0 8px 24px rgba(0,10,25,.18)}
+
+/* Cancel the earlier eager hero entrance; the JS now waits for fonts. */
+.mt-home .mt-home-hero .hero-copy>*{opacity:1;transform:none;animation:none}
+.mt-home .mt-home-hero .mt-hero-art{opacity:1;transform:none;animation:none}
+
+/* Hero entrance begins only after fonts are ready (JS adds mt-motion-ready). */
+.mt-motion-ready .mt-home-hero .mt-hero-eyebrow,
+.mt-motion-ready .mt-home-hero .mt-hero-title,
+.mt-motion-ready .mt-home-hero .mt-hero-description,
+.mt-motion-ready .mt-home-hero .mt-hero-actions,
+.mt-motion-ready .mt-home-hero .mt-hero-tags{animation:mtFadeUp .72s var(--mt-ease) both}
+.mt-motion-ready .mt-home-hero .mt-hero-eyebrow{animation-delay:.04s}
+.mt-motion-ready .mt-home-hero .mt-hero-title{animation-delay:.14s}
+.mt-motion-ready .mt-home-hero .mt-hero-description{animation-delay:.25s}
+.mt-motion-ready .mt-home-hero .mt-hero-actions{animation-delay:.36s}
+.mt-motion-ready .mt-home-hero .mt-hero-tags{animation-delay:.46s}
+.mt-motion-ready .mt-home-hero .mt-hero-art{animation:mtArtIn .9s var(--mt-ease) .18s both}
+@keyframes mtFadeUp{from{opacity:0;transform:translate3d(0,18px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes mtArtIn{from{opacity:0;transform:translate3d(0,12px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+
+/* Continuous decorative motion is intentionally slow and low amplitude. */
+.mt-home .orbit-a{animation:mtOrbit 42s linear infinite!important;transform-origin:center;backface-visibility:hidden}
+.mt-home .orbit-b{animation:mtOrbitReverse 56s linear infinite!important;transform-origin:center;backface-visibility:hidden}
+@keyframes mtOrbit{to{transform:rotate(336deg)}}
+@keyframes mtOrbitReverse{to{transform:rotate(-312deg)}}
+.mt-home .hero-logo{animation:mtLogoDrift 8s ease-in-out 1.1s infinite}
+@keyframes mtLogoDrift{0%,100%{translate:0 0}50%{translate:0 -5px}}
+.mt-home .visual-glow{animation:mtGlow 8s ease-in-out infinite}
+@keyframes mtGlow{0%,100%{opacity:.48}50%{opacity:.72}}
+
+/* One-shot scroll reveal. No permanent will-change; no layout dimensions animated. */
+.mt-motion-ready .mt-reveal{opacity:0;transform:translate3d(0,22px,0);transition:opacity .68s var(--mt-soft),transform .68s var(--mt-ease);transition-delay:var(--mt-delay,0ms)}
+.mt-motion-ready .mt-reveal.mt-visible{opacity:1;transform:translate3d(0,0,0)}
+/* Use individual translate for hover so it never overwrites reveal transforms. */
+@media(hover:hover) and (pointer:fine){
+ .cap-card,.preview-card,.project-card,.patent-card,.vision-grid article{transition:translate .35s var(--mt-soft),box-shadow .35s ease,border-color .3s ease}
+ .cap-card:hover,.preview-card:hover,.project-card:hover,.patent-card:hover,.vision-grid article:hover{translate:0 -5px;box-shadow:0 16px 38px rgba(7,27,51,.12)}
+ .preview-card img,.project-card>img,.product-image img,.gallery-grid img{transition:transform .65s var(--mt-soft)}
+ .preview-card:hover img,.project-card:hover>img,.product-image:hover img,.gallery-grid img:hover{transform:scale(1.025)}
+}
+
+/* Projects: four equal, calm image frames; consistent card rhythm. */
+.projects-section .project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:26px}
+.projects-section .project-card,.projects-section .project-card.project-wide{display:flex;flex-direction:column;grid-column:auto;min-width:0;height:100%;overflow:hidden;border:1px solid #dfe8ee;border-radius:6px;background:#fff;box-shadow:0 8px 24px rgba(7,27,51,.055)}
+.projects-section .project-card>img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:center;background:#edf3f6}
+.projects-section .project-card>div{display:flex;flex:1;flex-direction:column;align-items:flex-start;padding:24px;min-width:0}
+.projects-section .project-card h2{font-size:clamp(1.12rem,1.6vw,1.4rem);line-height:1.3;margin:7px 0 10px}
+.projects-section .project-card p{font-size:.9rem;line-height:1.7;margin:0 0 18px}
+.projects-section .project-card a{margin-top:auto;padding-top:4px}
+@media(max-width:760px){.projects-section .project-grid{gap:16px}.projects-section .project-card>div{padding:18px}}
+@media(max-width:560px){.projects-section .project-grid{grid-template-columns:minmax(0,1fr);gap:20px}.projects-section .project-card>img{aspect-ratio:16/10}.projects-section .project-card>div{padding:21px}}
+
+/* Responsive hero geometry: no fixed oversized title line box. */
+@media(max-width:1100px){.hero-copy h1{max-width:15ch;font-size:clamp(2.65rem,6.5vw,4rem)}.hero-visual{min-height:330px}}
+@media(max-width:600px){.hero-copy h1{max-width:100%;font-size:clamp(2.2rem,9vw,2.9rem);line-height:1.1}.hero-visual{min-height:260px}.hero-logo{width:min(245px,72vw)}.mt-home .orbit-a{animation-duration:55s!important}.mt-home .orbit-b{animation-duration:68s!important}}
+@media(hover:none){.cap-card:hover,.preview-card:hover,.project-card:hover,.patent-card:hover,.vision-grid article:hover{translate:none;box-shadow:none}.preview-card:hover img,.project-card:hover>img,.product-image:hover img{transform:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.mt-motion-ready .mt-reveal,.mt-motion-ready .mt-reveal.mt-visible{opacity:1!important;transform:none!important;transition:none!important}.mt-home .hero-logo{translate:none!important}}

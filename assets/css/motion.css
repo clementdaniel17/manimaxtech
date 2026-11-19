@@ -1,0 +1,141 @@
+/* ================================================================
+   MANIMAX TECH — GLOBAL EDITORIAL MOTION SYSTEM
+   Shared by all seven pages. Home hero choreography remains in
+   home-animations.css. Motion uses opacity/transform only.
+   ================================================================ */
+:root {
+  --mt-ease-editorial: cubic-bezier(.2,.72,.2,1);
+  --mt-ease-soft: cubic-bezier(.22,.61,.36,1);
+  --mt-motion-time: 760ms;
+}
+
+/* Page-level entrance */
+.page-hero { isolation:isolate; }
+.page-hero .container { position:relative; z-index:2; }
+.page-hero .eyebrow,
+.page-hero h1,
+.page-hero p { opacity:0; transform:translate3d(0,22px,0); animation:mtPageIntro 850ms var(--mt-ease-editorial) forwards; }
+.page-hero .eyebrow { animation-delay:80ms; }
+.page-hero h1 { animation-delay:210ms; }
+.page-hero p { animation-delay:350ms; }
+.page-hero-orbit { transform-origin:center; animation:mtPageOrbit 32s linear infinite; }
+@keyframes mtPageIntro { to { opacity:1; transform:translate3d(0,0,0); } }
+@keyframes mtPageOrbit { to { transform:rotate(360deg); } }
+
+/* Scroll reveal — activated only after JS adds mt-motion-ready */
+.mt-motion-ready .mt-reveal {
+  opacity:0;
+  transform:translate3d(0,34px,0);
+  transition:opacity var(--mt-motion-time) var(--mt-ease-soft),
+             transform var(--mt-motion-time) var(--mt-ease-editorial);
+  transition-delay:var(--mt-delay,0ms);
+  will-change:opacity,transform;
+}
+.mt-motion-ready .mt-reveal.mt-visible {
+  opacity:1;
+  transform:translate3d(0,0,0);
+}
+
+/* Editorial image treatment */
+.product-image img,
+.image-stack img,
+.project-card > img,
+.preview-card img,
+.gallery-grid img,
+.founder-photo-wrap img {
+  transition:transform 850ms var(--mt-ease-soft);
+}
+@media (hover:hover) and (pointer:fine) {
+  .product-image:hover img,
+  .project-card:hover > img,
+  .preview-card:hover img,
+  .gallery-grid img:hover { transform:scale(1.035); }
+  .cap-card,
+  .preview-card,
+  .project-card,
+  .patent-card,
+  .vision-grid article,
+  .service-detail {
+    transition:transform 420ms var(--mt-ease-soft),
+               box-shadow 420ms ease,
+               border-color 300ms ease;
+  }
+  .cap-card:hover,
+  .preview-card:hover,
+  .project-card:hover,
+  .patent-card:hover,
+  .vision-grid article:hover { transform:translate3d(0,-6px,0); box-shadow:0 20px 46px rgba(7,27,51,.11); }
+  .nav-link { position:relative; }
+  .nav-link::after {
+    content:""; position:absolute; left:10px; right:10px; bottom:5px;
+    height:2px; background:#36c7c1; transform:scaleX(0); transform-origin:left;
+    transition:transform 300ms var(--mt-ease-soft);
+  }
+  .nav-link:hover::after,.nav-link.active::after { transform:scaleX(1); }
+}
+
+/* Buttons and touch feedback */
+.button,.nav-cta,.text-link,.menu-toggle,.mt-back-top {
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.button,.nav-cta { transition:transform 260ms var(--mt-ease-soft),box-shadow 300ms ease,background-color 300ms ease; }
+.button:active,.nav-cta:active { transform:scale(.975); }
+.button:focus-visible,.nav-cta:focus-visible,.nav-link:focus-visible,
+.menu-toggle:focus-visible,.mt-back-top:focus-visible {
+  outline:3px solid rgba(54,199,193,.7); outline-offset:4px;
+}
+
+/* Shared scroll progress and back-to-top controls */
+.mt-scroll-progress {
+  position:fixed; inset:0 auto auto 0; width:100%; height:3px;
+  z-index:5000; background:#36c7c1; transform:scaleX(0);
+  transform-origin:left center; pointer-events:none;
+}
+.mt-back-top {
+  position:fixed; right:24px; bottom:24px; z-index:4500;
+  width:46px; height:46px; border:1px solid rgba(255,255,255,.25);
+  border-radius:50%; background:#071b33; color:#fff; font-size:23px;
+  line-height:1; cursor:pointer; opacity:0; visibility:hidden;
+  transform:translate3d(0,12px,0);
+  transition:opacity 260ms ease,transform 260ms ease,visibility 260ms ease,background 260ms ease;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+}
+.mt-back-top.is-visible { opacity:1; visibility:visible; transform:translate3d(0,0,0); }
+.mt-back-top:hover { background:#00a6a6; }
+
+/* Footer reveal and page finish */
+.footer { position:relative; }
+.footer-grid > div { min-width:0; }
+
+/* Tablet */
+@media (max-width:1100px) {
+  .page-hero-orbit { right:-190px; opacity:.8; }
+  .mt-motion-ready .mt-reveal { transform:translate3d(0,24px,0); }
+}
+
+/* Mobile: reduce movement and remove hover-only visual changes */
+@media (max-width:600px) {
+  .page-hero .eyebrow,.page-hero h1,.page-hero p { transform:translate3d(0,14px,0); animation-duration:700ms; }
+  .page-hero-orbit { width:300px; height:300px; right:-190px; top:12px; }
+  .mt-motion-ready .mt-reveal { transform:translate3d(0,18px,0); }
+  .mt-back-top { right:14px; bottom:14px; width:42px; height:42px; }
+}
+@media (hover:none) {
+  .cap-card:hover,.preview-card:hover,.project-card:hover,.patent-card:hover,
+  .vision-grid article:hover { transform:none; box-shadow:none; }
+  .product-image:hover img,.project-card:hover > img,.preview-card:hover img { transform:none; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion:reduce) {
+  .page-hero .eyebrow,.page-hero h1,.page-hero p {
+    opacity:1; transform:none; animation:none;
+  }
+  .page-hero-orbit { animation:none; }
+  .mt-motion-ready .mt-reveal,.mt-motion-ready .mt-reveal.mt-visible {
+    opacity:1; transform:none; transition:none; will-change:auto;
+  }
+  .product-image img,.image-stack img,.project-card > img,.preview-card img,
+  .gallery-grid img,.founder-photo-wrap img,.button,.nav-cta { transition:none; }
+}

@@ -1,0 +1,13 @@
+MANIMAX TECH FAVICON
+
+The favicon is based on the existing MANIMAX TECH antenna/drone emblem.
+It is already linked in all seven HTML pages.
+
+Included files:
+- assets/favicon.ico (browser compatibility)
+- assets/favicon-16.png and favicon-32.png (browser tabs)
+- assets/favicon-512.png (high-resolution icon)
+- assets/apple-touch-icon.png (iOS home-screen icon)
+
+No additional installation is required. Upload the complete website folder to your hosting account.
+If the old icon remains visible after deployment, hard-refresh the page or clear the browser favicon cache.
