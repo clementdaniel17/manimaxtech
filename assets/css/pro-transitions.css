@@ -1,0 +1,201 @@
+/* MANIMAX TECH — unified premium page transitions and shared page motion */
+:root{--mt-ink:#071b33;--mt-cyan:#39d6d0;--mt-ease:cubic-bezier(.22,.75,.2,1)}
+html{scroll-behavior:smooth}body{overflow-x:clip}
+.mt-page-wipe{position:fixed;inset:0;z-index:999999;pointer-events:none;background:radial-gradient(ellipse at 78% 48%,rgba(57,214,208,.22),transparent 38%),linear-gradient(112deg,#06172c 0%,#0a2c49 54%,#087e83 100%);transform:scaleX(1);transform-origin:right center;transition:transform .78s cubic-bezier(.76,0,.24,1);will-change:transform}
+.mt-page-wipe:before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 34%,rgba(132,255,248,.24) 49%,transparent 64%);transform:translateX(-120%)}
+.mt-page-wipe.is-away{transform:scaleX(0)}.mt-page-wipe.is-away:before{animation:mt-light-sweep .72s ease both}.mt-page-wipe.is-leaving{transform:scaleX(1);transform-origin:left center}
+@keyframes mt-light-sweep{to{transform:translateX(120%)}}
+body.mt-page-entering main{opacity:.94;transform:translateY(10px)}body.mt-page-arrived main{opacity:1;transform:translateY(0);transition:opacity .62s ease,transform .72s var(--mt-ease)}
+body.mt-page-leaving main{opacity:.9;transform:translateY(-5px);transition:opacity .32s ease,transform .42s var(--mt-ease)}body.mt-page-leaving{pointer-events:none}
+.page-hero,.page-header,.inner-hero{isolation:isolate}.page-hero h1,.page-header h1,.inner-hero h1{animation:mt-heading-in .78s var(--mt-ease) both}.page-hero p,.page-header p,.inner-hero p{animation:mt-heading-in .78s var(--mt-ease) .1s both}
+@keyframes mt-heading-in{from{opacity:0;transform:translateY(18px);filter:blur(2px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+.mt-reveal{transition:opacity .68s var(--mt-ease),transform .68s var(--mt-ease),filter .68s var(--mt-ease);transition-delay:var(--mt-delay,0ms)}.mt-reveal:not(.mt-visible){filter:blur(1.5px)}.mt-reveal.mt-visible{filter:blur(0)}
+.cap-card,.preview-card,.project-card,.patent-card,.service-detail,.product-detail,.contact-grid>*{backface-visibility:hidden}
+@media(hover:hover) and (pointer:fine){.cap-card,.preview-card,.project-card,.patent-card,.service-detail,.product-detail{transition:transform .38s var(--mt-ease),box-shadow .38s ease,border-color .38s ease}.cap-card:hover,.preview-card:hover,.project-card:hover,.patent-card:hover,.service-detail:hover,.product-detail:hover{transform:translateY(-5px);box-shadow:0 18px 42px rgba(3,22,42,.13)}.project-card img,.preview-card img,.product-detail img{transition:transform .68s var(--mt-ease)}.project-card:hover img,.preview-card:hover img,.product-detail:hover img{transform:scale(1.035)}}
+button,a{-webkit-tap-highlight-color:transparent}:focus-visible{outline:2px solid var(--mt-cyan);outline-offset:4px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mt-page-wipe{display:none!important}body.mt-page-entering main,body.mt-page-arrived main,body.mt-page-leaving main{opacity:1!important;transform:none!important;transition:none!important}.page-hero h1,.page-header h1,.inner-hero h1,.page-hero p,.page-header p,.inner-hero p{animation:none!important}.mt-reveal{transition:none!important;filter:none!important}}
+
+
+/* Client-requested content refinements */
+.section p,
+.founder-grid p,
+.cofounder-grid p,
+.product-copy p,
+.project-card p,
+.service-detail p,
+.contact-grid .lead,
+.patent-card p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+.cofounder-grid {
+  display: grid;
+  grid-template-columns: .75fr 1.25fr;
+  gap: 70px;
+  align-items: start;
+  padding-top: 52px;
+  border-top: 1px solid rgba(7,27,51,.12);
+}
+.cofounder-photo-wrap {
+  position: relative;
+  background: #eaf1f5;
+  padding: 18px;
+}
+.cofounder-photo-wrap img {
+  display: block;
+  width: 100%;
+  height: 470px;
+  object-fit: cover;
+  object-position: center top;
+}
+.cofounder-photo-wrap > span {
+  position: absolute;
+  bottom: 32px;
+  left: 32px;
+  background: var(--teal);
+  color: #fff;
+  padding: 9px 13px;
+  font-size: .63rem;
+  letter-spacing: .13em;
+  font-weight: 800;
+}
+.cofounder-copy h2 { margin: 16px 0 5px; }
+.industry-work-note {
+  padding: 20px 24px;
+  border-left: 3px solid var(--teal);
+  background: var(--soft);
+  margin: 0 0 36px;
+  color: #40566b;
+}
+.industry-work-note p { margin: 7px 0 0; }
+@media (max-width: 767px) {
+  .cofounder-grid { grid-template-columns: 1fr; gap: 28px; }
+  .cofounder-photo-wrap img { height: auto; max-height: 520px; object-fit: cover; }
+}
+
+
+/* MANIMAX TECH brand visibility refinement */
+.site-header .brand {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  width: clamp(205px, 21vw, 270px);
+  min-width: 0;
+  line-height: 1;
+}
+.site-header .brand img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 72px;
+  object-fit: contain;
+  object-position: left center;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.2));
+}
+.hero-visual {
+  min-width: 0;
+}
+.hero-logo {
+  display: block;
+  width: min(570px, 100%);
+  max-width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 38px rgba(0,0,0,.28));
+  transform: scale(1.035);
+}
+@media (max-width: 1100px) {
+  .site-header .brand { width: 218px; }
+  .main-nav { gap: 12px; }
+}
+@media (max-width: 767px) {
+  .site-header { height: 76px; }
+  .site-header .brand { width: 205px; max-width: calc(100% - 65px); }
+  .site-header .brand img { max-height: 62px; }
+  .hero-logo { width: min(460px, 100%); transform: none; }
+  .hero-visual { min-height: 320px; padding: 16px 0; }
+}
+@media (max-width: 380px) {
+  .site-header .brand { width: 185px; }
+  .hero-visual { min-height: 275px; }
+}
+
+
+/* Stacked MANIMAX TECH logo lockup — matching the approved reference */
+.site-header { height: 104px !important; }
+.site-header .brand { width: 92px !important; height: 96px; justify-content: center; overflow: visible; }
+.site-header .brand img { width: 100%; height: 96px; max-height: 96px; object-fit: contain; object-position: center; }
+.site-header .nav-wrap { align-items: center; }
+.site-header .main-nav { gap: clamp(6px, .9vw, 14px); }
+.hero-logo { width: min(520px, 100%); max-height: 520px; transform: none; }
+.footer-brand { display: inline-flex; width: 160px; height: auto; }
+.footer-brand img { display: block; width: 100%; height: auto; max-height: none; object-fit: contain; }
+@media (max-width: 850px) {
+  .site-header { height: 82px !important; }
+  .site-header .brand { width: 76px !important; height: 78px; }
+  .site-header .brand img { height: 78px; max-height: 78px; }
+  .main-nav { top: 82px !important; }
+  .hero-logo { width: min(430px, 100%); }
+}
+@media (max-width: 560px) {
+  .site-header .brand { width: 70px !important; height: 74px; }
+  .site-header .brand img { height: 74px; max-height: 74px; }
+  .footer-brand { width: 140px; }
+}
+
+
+/* White-backed stacked logo lockup for consistent contrast in the header and hero */
+.site-header { height: 110px !important; }
+.site-header .brand { width: 104px !important; height: 104px; justify-content: center; overflow: hidden; border-radius: 5px; background: #fff; }
+.site-header .brand img { width: 100%; height: 104px; max-height: 104px; object-fit: contain; object-position: center; filter: none; }
+.site-header .nav-wrap { align-items: center; }
+.hero-logo { width: min(500px, 100%); max-height: 500px; object-fit: contain; transform: none; border-radius: 4px; background: #fff; filter: drop-shadow(0 18px 38px rgba(0,0,0,.22)); }
+.footer-brand { width: 160px; }
+@media (max-width: 850px) {
+  .site-header { height: 86px !important; }
+  .site-header .brand { width: 82px !important; height: 82px; }
+  .site-header .brand img { height: 82px; max-height: 82px; }
+  .main-nav { top: 86px !important; }
+  .hero-logo { width: min(430px, 100%); }
+}
+@media (max-width: 560px) {
+  .site-header .brand { width: 74px !important; height: 74px; }
+  .site-header .brand img { height: 74px; max-height: 74px; }
+}
+
+
+/* Logo contrast refinement: white disc behind the emblem only; transparent wordmark and animated hero */
+.site-header { height: 104px !important; }
+.site-header .brand { width: 104px !important; height: 104px; justify-content: center; overflow: visible; border-radius: 0; background: transparent !important; }
+.site-header .brand img { width: 100%; height: 104px; max-height: 104px; object-fit: contain; object-position: center; filter: none; background: transparent !important; }
+.hero-logo { width: min(500px, 100%); max-height: 500px; object-fit: contain; transform: translate3d(var(--mt-pointer-x,0px),var(--mt-pointer-y,0px),0); border-radius: 0; background: transparent !important; filter: drop-shadow(0 18px 38px rgba(0,0,0,.22)); }
+.footer-brand { width: 160px; background: transparent !important; }
+.footer-brand img { background: transparent !important; }
+@media (max-width: 850px) {
+  .site-header { height: 82px !important; }
+  .site-header .brand { width: 78px !important; height: 78px; }
+  .site-header .brand img { height: 78px; max-height: 78px; }
+  .main-nav { top: 82px !important; }
+  .hero-logo { width: min(430px, 100%); }
+}
+@media (max-width: 560px) {
+  .site-header .brand { width: 72px !important; height: 74px; }
+  .site-header .brand img { height: 74px; max-height: 74px; }
+}
+
+
+/* MANIMAX TECH — balanced hero and clean logo typography (Nov 2026) */
+.site-header{height:108px!important}
+.site-header .brand img{width:138px!important;height:100px!important;max-height:100px!important;object-fit:contain!important}
+.hero{min-height:650px!important;padding:132px 0 66px!important}
+.hero-grid{min-height:430px!important;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)!important;gap:22px!important}
+.hero h1{font-size:clamp(2.8rem,4.9vw,4.65rem)!important;line-height:1.06!important;margin:18px 0 20px!important}
+.hero-copy>p{font-size:1.02rem!important;line-height:1.7!important}
+.hero-visual{min-height:380px!important}
+.hero-logo{width:min(360px,88%)!important;max-height:360px!important;object-fit:contain!important;background:transparent!important;filter:drop-shadow(0 12px 26px rgba(0,12,26,.18))!important}
+.hero-tags{margin-top:34px!important;gap:10px!important;font-size:.62rem!important;color:#b7cbd9!important}
+.visual-label{display:none!important}
+.footer-brand{width:160px!important}
+@media(max-width:1100px){.hero{min-height:620px!important}.hero-logo{width:min(330px,88%)!important;max-height:330px!important}.hero-visual{min-height:340px!important}}
+@media(max-width:760px){.site-header{height:88px!important}.site-header .brand img{width:112px!important;height:82px!important;max-height:82px!important}.hero{padding:120px 0 60px!important;min-height:0!important}.hero-grid{grid-template-columns:minmax(0,1fr)!important;min-height:0!important;gap:16px!important}.hero h1{font-size:clamp(2.5rem,8vw,3.5rem)!important}.hero-visual{min-height:300px!important}.hero-logo{width:min(290px,76vw)!important;max-height:290px!important}.hero-tags{margin-top:24px!important;flex-wrap:wrap!important}}

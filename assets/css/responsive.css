@@ -1,0 +1,146 @@
+/* ============================================================
+   MANIMAX TECH — RESPONSIVE SYSTEM (desktop / tablet / phone)
+   Loaded after style.css so these layout rules take precedence.
+   ============================================================ */
+
+:root { --mt-header-height: 84px; }
+html { width:100%; max-width:100%; overflow-x:clip; }
+body { width:100%; max-width:100%; min-width:320px; overflow-x:clip; }
+img, video, iframe { max-width:100%; }
+.container { min-width:0; }
+
+/* Header baseline */
+.site-header { position:fixed; inset:0 0 auto 0; width:100%; z-index:3000; }
+.site-header .nav-wrap { position:relative; min-width:0; }
+.menu-toggle { display:none; flex:0 0 44px; align-items:center; justify-content:center; flex-direction:column; width:44px; height:44px; border:1px solid rgba(255,255,255,.25); border-radius:6px; background:transparent; cursor:pointer; padding:7px; }
+.menu-toggle span { display:block; width:23px; height:2px; margin:3px 0; border-radius:2px; background:#fff; transition:transform .22s ease, opacity .18s ease; }
+
+/* Avoid the desktop nav becoming cramped before the mobile breakpoint. */
+@media (max-width: 1100px) {
+  :root { --mt-header-height: 76px; }
+  .site-header { height:var(--mt-header-height); }
+  .site-header .nav-wrap { height:var(--mt-header-height); }
+  .menu-toggle { display:flex !important; position:relative; z-index:3002; }
+  .site-header .main-nav {
+    display:none !important;
+    position:absolute !important;
+    top:var(--mt-header-height) !important;
+    left:calc(-1 * max(22px, (100vw - 1160px)/2)) !important;
+    right:auto !important;
+    width:100vw !important;
+    max-width:100vw !important;
+    max-height:calc(100dvh - var(--mt-header-height));
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    padding:14px max(22px, calc((100vw - 1160px)/2)) 22px !important;
+    margin:0 !important;
+    background:#071b33 !important;
+    border-top:1px solid rgba(255,255,255,.12);
+    box-shadow:0 18px 35px rgba(0,10,25,.28);
+    flex-direction:column !important;
+    align-items:stretch !important;
+    gap:10px !important;
+    z-index:3001;
+  }
+  .site-header .main-nav.is-open { display:flex !important; }
+  .site-header .main-nav ul { display:flex !important; flex-direction:column !important; align-items:stretch; width:100%; gap:0 !important; margin:0; padding:0; }
+  .site-header .main-nav ul li { display:block; width:100%; }
+  .site-header .main-nav ul li .nav-link { display:block; width:100%; padding:12px 4px !important; font-size:.94rem !important; border-bottom:1px solid rgba(255,255,255,.09); }
+  .site-header .main-nav .nav-link::after { left:4px; right:auto; width:34px; bottom:4px; }
+  .site-header .main-nav .nav-cta { display:block; width:100%; text-align:center; margin-top:5px; }
+  .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform:translateY(8px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity:0; }
+  .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform:translateY(-8px) rotate(-45deg); }
+
+  .hero { padding-top:125px; min-height:0; }
+  .hero-grid { grid-template-columns:minmax(0,1fr); min-height:0; gap:24px; }
+  .hero-copy, .hero-visual { min-width:0; }
+  .hero-visual { min-height:340px; }
+  .hero-logo { width:min(310px,78vw); max-height:310px; }
+  .orbit-a { width:min(440px,90vw); }
+  .orbit-b { width:min(360px,78vw); }
+  .hero h1 { font-size:clamp(2.65rem,7vw,4.2rem); }
+  .intro-grid, .two-col, .statement-grid, .vision-grid, .founder-grid, .contact-grid { grid-template-columns:minmax(0,1fr); gap:30px; }
+  .two-col > *, .vision-grid > *, .founder-grid > *, .contact-grid > * { min-width:0; }
+  .founder-grid { gap:32px; }
+  .founder-photo-wrap { width:min(100%,520px); margin-inline:auto; }
+  .founder-photo-wrap img { width:100%; height:auto; max-height:560px; aspect-ratio:4/5; object-fit:cover; }
+  .cap-grid, .product-preview-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .cap-card:last-child { grid-column:auto; }
+  .project-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .project-wide { grid-column:1/-1; }
+  .product-detail { grid-template-columns:minmax(0,1fr); gap:28px; }
+  .product-detail.reverse .product-image { order:0; }
+  .product-image > img, .image-stack img { height:auto; max-height:390px; }
+  .gallery-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .service-detail { grid-template-columns:60px minmax(0,1fr); gap:20px; }
+  .section-heading { align-items:flex-start; flex-direction:column; gap:12px; }
+  .patent-strip-inner, .cta-inner { align-items:flex-start; flex-direction:column; gap:20px; }
+  .footer-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:25px; }
+}
+
+@media (max-width: 600px) {
+  :root { --mt-header-height:72px; }
+  .site-header { height:var(--mt-header-height); }
+  .site-header .nav-wrap { height:var(--mt-header-height); }
+  .site-header .main-nav { top:var(--mt-header-height) !important; max-height:calc(100dvh - var(--mt-header-height)); }
+  .container { width:calc(100% - 32px); max-width:100%; }
+  .section { padding:58px 0; }
+  .page-hero { min-height:0; padding:125px 0 58px; }
+  .page-hero h1 { font-size:clamp(2.05rem,9vw,2.85rem); line-height:1.13; overflow-wrap:anywhere; }
+  .page-hero p { font-size:.98rem; }
+  .hero { padding:112px 0 62px; }
+  .hero h1 { font-size:clamp(2.15rem,9vw,2.9rem); line-height:1.1; overflow-wrap:anywhere; }
+  .hero-copy > p { font-size:1rem; }
+  .hero-actions { align-items:stretch; flex-direction:column; }
+  .hero-actions .button { width:100%; }
+  .hero-tags { flex-wrap:wrap; margin-top:30px; line-height:1.8; }
+  .hero-visual { min-height:260px; }
+  .hero-logo { width:min(245px,72vw); max-height:245px; }
+  .visual-glow { width:220px; height:220px; }
+  .label-a { left:0; }
+  .label-b { right:0; }
+  .section h2, .founder-grid h2 { font-size:clamp(1.8rem,8vw,2.45rem); overflow-wrap:anywhere; }
+  .cap-grid, .product-preview-grid, .project-grid, .market-grid, .footer-grid { grid-template-columns:minmax(0,1fr); }
+  .cap-card { min-height:0; padding:25px; }
+  .cap-card:last-child, .project-wide { grid-column:auto; }
+  .project-wide { display:block; }
+  .project-card > img, .preview-card img { width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; }
+  .project-wide > img { height:auto; min-height:0; }
+  .product-image { padding:10px; }
+  .product-image > img, .image-stack img { width:100%; height:auto; max-height:none; aspect-ratio:4/3; object-fit:contain; }
+  .image-stack { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .service-detail { grid-template-columns:38px minmax(0,1fr); gap:13px; padding:30px 0; }
+  .service-detail-no { font-size:1.6rem; }
+  .gallery-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .gallery-grid img { width:100%; height:auto; aspect-ratio:1/1; object-fit:cover; }
+  .founder-photo-wrap { padding:10px; }
+  .founder-photo-wrap img { height:auto; aspect-ratio:4/5; }
+  .founder-photo-wrap > span { left:20px; bottom:22px; }
+  .credential-tags, .info-pills, .tag-list { gap:7px; }
+  .credential-tags span, .info-pills span, .tag-list span { font-size:.7rem; max-width:100%; overflow-wrap:anywhere; }
+  .market-grid span { min-width:0; }
+  .contact-form { padding:22px !important; }
+  .footer-bottom { display:flex; flex-direction:column; gap:7px; }
+  .hero-bottom .container { gap:10px; flex-wrap:wrap; }
+  .hero-bottom .container span:last-child { display:none; }
+  .mt-back-top { right:14px; bottom:14px; width:42px; height:42px; }
+}
+
+@media (max-width: 360px) {
+  .container { width:calc(100% - 26px); }
+  .brand { gap:6px; font-size:.88rem; }
+  .brand img { width:37px; height:37px; }
+  .menu-toggle { width:40px; height:40px; flex-basis:40px; }
+  .hero h1 { font-size:2.05rem; }
+  .page-hero h1 { font-size:1.95rem; }
+  .service-detail { grid-template-columns:32px minmax(0,1fr); gap:10px; }
+}
+
+@media (hover:none) {
+  .cap-card:hover, .preview-card:hover, .project-card:hover, .patent-card:hover { transform:none; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}

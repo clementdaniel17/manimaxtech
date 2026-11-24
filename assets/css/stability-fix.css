@@ -1,0 +1,120 @@
+
+/* =========================================================
+   MANIMAX TECH — HERO LAYOUT STABILITY PATCH
+   Prevent font-swap reflow, artwork scale jump and header washout.
+   ========================================================= */
+
+/* Keep hero geometry stable while web fonts and entrance effects load. */
+.hero {
+  position: relative;
+  min-height: min(760px, 100svh);
+  isolation: isolate;
+}
+.hero-grid {
+  grid-template-columns: minmax(0, 1.04fr) minmax(390px, .96fr);
+  align-items: center;
+  gap: clamp(24px, 3vw, 48px);
+  min-height: 560px;
+}
+.hero-copy { min-width: 0; max-width: 680px; }
+.hero h1 {
+  width: 100%;
+  max-width: 650px;
+  font-size: clamp(3.15rem, 5.05vw, 4.55rem);
+  line-height: 1.035;
+  letter-spacing: -.055em;
+  text-wrap: balance;
+  overflow-wrap: normal;
+  min-height: 3.12em;
+}
+.hero-visual {
+  min-width: 0;
+  min-height: 480px;
+  contain: layout paint;
+}
+.hero-logo {
+  width: min(410px, 88%);
+  max-height: 410px;
+}
+
+/* Avoid the hero artwork visibly scaling after first paint. */
+.mt-home .mt-home-hero .mt-hero-art {
+  transform: translate3d(0, 18px, 0);
+  animation-name: mtStableArtEntrance;
+}
+@keyframes mtStableArtEntrance {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* Keep the title's line box and position fixed during its entrance. */
+.mt-home .mt-home-hero .mt-hero-title {
+  min-height: 3.12em;
+  animation-name: mtStableTitleEntrance;
+}
+@keyframes mtStableTitleEntrance {
+  from { opacity: 0; transform: translate3d(0, 20px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* Header remains consistently dark; avoid translucent washout on scroll. */
+.site-header,
+.site-header.is-scrolled {
+  background: rgba(7, 27, 51, .97);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transition: background-color 240ms ease, box-shadow 240ms ease;
+}
+.site-header.is-scrolled {
+  box-shadow: 0 8px 24px rgba(0, 10, 25, .16);
+}
+
+/* Desktop/tablet geometry */
+@media (max-width: 1100px) {
+  .hero { min-height: auto; }
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: auto;
+  }
+  .hero-copy { max-width: 760px; }
+  .hero h1 {
+    max-width: 760px;
+    min-height: 0;
+    font-size: clamp(2.8rem, 6.6vw, 4.35rem);
+  }
+  .hero-visual { min-height: 380px; }
+  .mt-home .mt-home-hero .mt-hero-title { min-height: 0; }
+}
+
+/* Mobile: no oversized fixed hero line box or pointer parallax. */
+@media (max-width: 600px) {
+  .hero { min-height: auto; }
+  .hero-grid { gap: 12px; }
+  .hero h1 {
+    min-height: 0;
+    max-width: 100%;
+    font-size: clamp(2.35rem, 10vw, 3.35rem);
+    line-height: 1.08;
+    text-wrap: pretty;
+  }
+  .hero-visual {
+    min-height: 285px;
+    contain: none;
+  }
+  .hero-logo { width: min(270px, 78vw); max-height: 270px; }
+  .mt-home .mt-home-hero .mt-hero-title { min-height: 0; }
+}
+
+/* Reduced motion: remove continuous decorative movement. */
+@media (prefers-reduced-motion: reduce) {
+  .mt-home .mt-home-hero::before,
+  .mt-home .mt-home-hero::after,
+  .mt-home .orbit-a,
+  .mt-home .orbit-b,
+  .mt-home .hero-logo,
+  .mt-home .visual-glow,
+  .mt-home .visual-label {
+    animation: none !important;
+    translate: none !important;
+  }
+}

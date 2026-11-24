@@ -1,0 +1,298 @@
+/* ================================================================
+   MANIMAX TECH — HOME PAGE CINEMATIC MOTION
+   Original editorial motion system. Home page only.
+   Uses opacity + transform for smooth compositing; no scroll hijack.
+   ================================================================ */
+:root {
+  --mt-motion-ease: cubic-bezier(.2,.72,.2,1);
+  --mt-motion-soft: cubic-bezier(.22,.61,.36,1);
+  --mt-motion-duration: 880ms;
+}
+
+/* Hero: layered atmosphere without heavy animated filters */
+.mt-home .mt-home-hero {
+  isolation: isolate;
+  overflow: clip;
+}
+.mt-home .mt-home-hero::before,
+.mt-home .mt-home-hero::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 0;
+}
+.mt-home .mt-home-hero::before {
+  width: min(68vw, 820px);
+  aspect-ratio: 1;
+  right: -18%;
+  top: -42%;
+  border: 1px solid rgba(93,220,211,.11);
+  box-shadow: 0 0 0 42px rgba(93,220,211,.025),
+              0 0 0 95px rgba(93,220,211,.018),
+              0 0 0 160px rgba(93,220,211,.012);
+  animation: mtHeroHalo 13s ease-in-out infinite alternate;
+}
+.mt-home .mt-home-hero::after {
+  width: min(48vw, 560px);
+  aspect-ratio: 1;
+  left: -28%;
+  bottom: -62%;
+  border: 1px solid rgba(93,220,211,.075);
+  animation: mtHeroHalo 17s ease-in-out -5s infinite alternate-reverse;
+}
+@keyframes mtHeroHalo {
+  from { transform: scale(.94) rotate(-8deg); opacity: .42; }
+  to   { transform: scale(1.04) rotate(8deg); opacity: .9; }
+}
+.mt-home .hero-pattern {
+  opacity: .13;
+  animation: mtGridBreath 18s ease-in-out infinite alternate;
+}
+@keyframes mtGridBreath {
+  from { opacity: .075; }
+  to   { opacity: .17; }
+}
+.mt-home .hero-grid,
+.mt-home .mt-home-hero .hero-bottom {
+  position: relative;
+  z-index: 1;
+}
+
+/* Editorial entrance: staggered, crisp, no blur animation */
+.mt-home .mt-home-hero .hero-copy > * {
+  opacity: 0;
+  transform: translate3d(0, 34px, 0);
+  animation: mtEditorialRise 920ms var(--mt-motion-ease) both;
+}
+.mt-home .mt-home-hero .mt-hero-eyebrow { animation-delay: 100ms; }
+.mt-home .mt-home-hero .mt-hero-title { animation-delay: 230ms; }
+.mt-home .mt-home-hero .mt-hero-description { animation-delay: 390ms; }
+.mt-home .mt-home-hero .mt-hero-actions { animation-delay: 530ms; }
+.mt-home .mt-home-hero .mt-hero-tags { animation-delay: 680ms; }
+.mt-home .mt-home-hero .mt-hero-art {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0) scale(.94);
+  animation: mtArtEntrance 1250ms var(--mt-motion-ease) 330ms both;
+}
+.mt-home .mt-home-hero .mt-hero-bottom {
+  opacity: 0;
+  animation: mtEditorialFade 900ms ease 980ms both;
+}
+@keyframes mtEditorialRise {
+  from { opacity: 0; transform: translate3d(0,34px,0); }
+  to   { opacity: 1; transform: translate3d(0,0,0); }
+}
+@keyframes mtArtEntrance {
+  from { opacity: 0; transform: translate3d(0,24px,0) scale(.94); }
+  to   { opacity: 1; transform: translate3d(0,0,0) scale(1); }
+}
+@keyframes mtEditorialFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Hero artwork: layered orbit, float and subtle depth response */
+.mt-home .hero-visual { isolation: isolate; }
+.mt-home .hero-visual::before,
+.mt-home .hero-visual::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: min(520px,95%);
+  aspect-ratio: 1;
+  border: 1px solid rgba(91,220,211,.12);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.mt-home .hero-visual::before {
+  animation: mtOrbitHalo 10s ease-in-out infinite;
+}
+.mt-home .hero-visual::after {
+  width: min(390px,78%);
+  border-color: rgba(91,220,211,.1);
+  animation: mtOrbitHalo 12s ease-in-out -6s infinite reverse;
+}
+@keyframes mtOrbitHalo {
+  0%,100% { transform: scale(.965); opacity: .42; }
+  50% { transform: scale(1.035); opacity: .95; }
+}
+.mt-home .hero-logo {
+  transform: translate3d(var(--mt-pointer-x,0px),var(--mt-pointer-y,0px),0);
+  animation: mtLogoFloat 7s ease-in-out 1.5s infinite;
+  backface-visibility: hidden;
+}
+@keyframes mtLogoFloat {
+  0%,100% { translate: 0 0; }
+  50% { translate: 0 -11px; }
+}
+.mt-home .orbit-a {
+  animation: mtOrbitA 30s linear infinite;
+  transform-origin: center;
+  backface-visibility: hidden;
+}
+.mt-home .orbit-b {
+  animation: mtOrbitB 39s linear infinite;
+  transform-origin: center;
+  backface-visibility: hidden;
+}
+@keyframes mtOrbitA {
+  from { transform: rotate(-24deg); }
+  to   { transform: rotate(336deg); }
+}
+@keyframes mtOrbitB {
+  from { transform: rotate(48deg); }
+  to   { transform: rotate(-312deg); }
+}
+.mt-home .visual-glow {
+  animation: mtGlowPulse 7s ease-in-out infinite;
+}
+@keyframes mtGlowPulse {
+  0%,100% { opacity: .48; transform: scale(.94); }
+  50% { opacity: .88; transform: scale(1.07); }
+}
+.mt-home .visual-label { animation: mtLabelFloat 5.5s ease-in-out infinite; }
+.mt-home .label-b { animation-delay: -2.75s; }
+@keyframes mtLabelFloat {
+  0%,100% { translate: 0 0; opacity: .72; }
+  50% { translate: 0 -7px; opacity: 1; }
+}
+
+/* Scroll reveal: one observer in JS; animate only once */
+.mt-home .mt-reveal {
+  opacity: 0;
+  transform: translate3d(0,38px,0);
+  transition: opacity 820ms var(--mt-motion-ease),
+              transform 820ms var(--mt-motion-ease);
+  transition-delay: var(--mt-delay,0ms);
+}
+.mt-home .mt-reveal.mt-visible {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+.mt-home .mt-reveal-left { transform: translate3d(-34px,0,0); }
+.mt-home .mt-reveal-right { transform: translate3d(34px,0,0); }
+.mt-home .mt-reveal-left.mt-visible,
+.mt-home .mt-reveal-right.mt-visible { transform: translate3d(0,0,0); }
+
+/* Cards and editorial image interactions */
+.mt-home .cap-card,
+.mt-home .preview-card {
+  transition: transform 560ms var(--mt-motion-soft),
+              box-shadow 560ms var(--mt-motion-soft),
+              border-color 350ms ease;
+}
+.mt-home .cap-card:hover,
+.mt-home .preview-card:hover {
+  transform: translate3d(0,-9px,0);
+  box-shadow: 0 24px 54px rgba(5,31,54,.16);
+  border-color: rgba(0,166,166,.32);
+}
+.mt-home .preview-card { overflow: hidden; }
+.mt-home .preview-card img {
+  transform: scale(1.001);
+  transition: transform 900ms var(--mt-motion-soft);
+}
+.mt-home .preview-card:hover img { transform: scale(1.055); }
+.mt-home .button,
+.mt-home .nav-cta {
+  transition: transform 380ms var(--mt-motion-soft),
+              box-shadow 380ms ease,
+              background-color 300ms ease;
+}
+.mt-home .button:active,
+.mt-home .nav-cta:active { transform: translateY(1px) scale(.975); }
+.mt-home .button-primary { box-shadow: 0 8px 24px rgba(0,166,166,.16); }
+.mt-home .button-primary:hover { box-shadow: 0 14px 32px rgba(0,166,166,.25); }
+
+/* A restrained statement-section orbit and CTA light sweep */
+.mt-home .statement-section { position: relative; overflow: hidden; }
+.mt-home .statement-section::after {
+  content: "";
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  right: -180px;
+  top: -230px;
+  border: 1px solid rgba(93,218,208,.16);
+  border-radius: 50%;
+  box-shadow: 0 0 0 35px rgba(93,218,208,.035),
+              0 0 0 75px rgba(93,218,208,.025);
+  pointer-events: none;
+  animation: mtStatementOrbit 24s linear infinite;
+}
+@keyframes mtStatementOrbit { to { transform: rotate(360deg); } }
+.mt-home .cta-section { position: relative; isolation: isolate; overflow: hidden; }
+.mt-home .cta-section::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 42vw;
+  min-width: 260px;
+  aspect-ratio: 1;
+  right: -10%;
+  top: -115%;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: 0 0 0 38px rgba(255,255,255,.035),
+              0 0 0 82px rgba(255,255,255,.025);
+  animation: mtCtaHalo 15s ease-in-out infinite alternate;
+}
+@keyframes mtCtaHalo {
+  from { transform: translate3d(0,0,0) scale(.92); }
+  to   { transform: translate3d(-28px,18px,0) scale(1.08); }
+}
+
+/* Tablet and phone: reduce travel distance and motion load */
+@media (max-width: 850px) {
+  .mt-home .orbit-a { animation-duration: 38s; }
+  .mt-home .orbit-b { animation-duration: 48s; }
+  .mt-home .mt-reveal { transform: translate3d(0,24px,0); }
+  .mt-home .mt-reveal-left,
+  .mt-home .mt-reveal-right { transform: translate3d(0,24px,0); }
+}
+@media (max-width: 600px) {
+  .mt-home .mt-home-hero .hero-copy > * { animation-duration: 760ms; }
+  .mt-home .hero-visual::before { width: 91%; }
+  .mt-home .hero-visual::after { width: 73%; }
+  .mt-home .visual-label { font-size: .52rem; }
+  .mt-home .mt-reveal { transform: translate3d(0,18px,0); }
+  .mt-home .mt-reveal-left,
+  .mt-home .mt-reveal-right { transform: translate3d(0,18px,0); }
+}
+
+/* Touch screens: do not simulate hover lift */
+@media (hover:none) {
+  .mt-home .cap-card:hover,
+  .mt-home .preview-card:hover { transform: none; box-shadow: none; }
+  .mt-home .preview-card:hover img { transform: none; }
+}
+
+/* Respect the visitor's reduced-motion preference */
+@media (prefers-reduced-motion:reduce) {
+  .mt-home .mt-home-hero::before,
+  .mt-home .mt-home-hero::after,
+  .mt-home .hero-pattern,
+  .mt-home .mt-home-hero .hero-copy > *,
+  .mt-home .mt-home-hero .mt-hero-art,
+  .mt-home .mt-home-hero .mt-hero-bottom,
+  .mt-home .hero-logo,
+  .mt-home .orbit-a,
+  .mt-home .orbit-b,
+  .mt-home .visual-glow,
+  .mt-home .visual-label,
+  .mt-home .statement-section::after,
+  .mt-home .cta-section::before { animation:none !important; }
+  .mt-home .mt-home-hero .hero-copy > *,
+  .mt-home .mt-home-hero .mt-hero-art,
+  .mt-home .mt-home-hero .mt-hero-bottom {
+    opacity:1 !important;
+    transform:none !important;
+  }
+  .mt-home .mt-reveal,
+  .mt-home .mt-reveal.mt-visible {
+    opacity:1 !important;
+    transform:none !important;
+    transition:none !important;
+  }
+}
